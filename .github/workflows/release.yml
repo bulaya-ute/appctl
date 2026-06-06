@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build and attach binaries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Build linux/amd64
+        env:
+          GOOS: linux
+          GOARCH: amd64
+          CGO_ENABLED: 0
+        run: |
+          go build \
+            -ldflags="-s -w -X main.version=${{ github.ref_name }}" \
+            -o appctl-linux-amd64 \
+            ./cmd/appctl
+
+      - name: Build linux/arm64
+        env:
+          GOOS: linux
+          GOARCH: arm64
+          CGO_ENABLED: 0
+        run: |
+          go build \
+            -ldflags="-s -w -X main.version=${{ github.ref_name }}" \
+            -o appctl-linux-arm64 \
+            ./cmd/appctl
+
+      - name: Attach binaries to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            appctl-linux-amd64
+            appctl-linux-arm64
