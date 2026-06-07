@@ -23,7 +23,8 @@ systemd service lifecycle, and Caddy reverse proxy configuration.
 Run "appctl server" to start the daemon, then use subcommands to manage apps.`,
 }
 
-func Execute() {
+func Execute(version string) {
+	rootCmd.Version = version
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
