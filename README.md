@@ -6,6 +6,16 @@ Self-hosted deployment manager for Linux servers. Manages git pull, build, syste
 
 ---
 
+## Quick Install (Linux)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/bulaya-ute/appctl/main/install.sh | bash
+```
+
+The script detects your architecture (amd64/arm64), downloads the latest binary, installs it to `/usr/local/bin`, and registers appctl as a systemd service.
+
+---
+
 ## Quick Start
 
 ```bash
@@ -107,7 +117,26 @@ Caddy must be installed and its admin API must be enabled (it is by default).
 
 ## Tech stack
 
-- Go 1.22
+- Go 1.22 — single static binary, no runtime dependencies
 - [chi](https://github.com/go-chi/chi) — HTTP router
 - [cobra](https://github.com/spf13/cobra) — CLI
-- [modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite) — pure-Go SQLite driver (no cgo)
+- [modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite) — pure-Go SQLite (no cgo)
+
+---
+
+## Documentation
+
+| Document | Description |
+|---|---|
+| [CLI Reference](docs/cli-reference.md) | All commands, flags, and examples |
+| [App Types](docs/app-types.md) | Build pipelines for dotnet-api, react-spa, static, custom |
+| [Setup & Self-Hosting](docs/setup.md) | Manual install, building from source, daemon config |
+| [Caddy Integration](docs/caddy.md) | How appctl manages Caddy routes |
+| [GitHub Webhooks](docs/webhooks.md) | Auto-deploy on release.published |
+| [Script Export](docs/export.md) | Generating setup.sh for a project's GitHub repo |
+
+---
+
+## License
+
+[MIT](LICENSE)
